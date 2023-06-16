@@ -72,7 +72,13 @@
  </template>
 
 <script>
+
+import { mapState } from 'vuex';
+
 export default {
+ computed: mapState([
+    'cities'
+  ]),
   data () {
     return {
       labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
@@ -83,6 +89,14 @@ export default {
         { day: 'Thursday', icon: 'mdi-cloud', temp: '25\xB0/15\xB0' },
       ],
     }
+  },
+  watch: {
+    cities(newCities) {
+      console.log('Cities', newCities);
+    }
+  },
+  mounted() {
+    this.$store.dispatch('requestCityByName', 'Novosibirsk');
   },
 }
 </script>
