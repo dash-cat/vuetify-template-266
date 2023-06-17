@@ -56,7 +56,7 @@ async function fetchLocationData(cityName) {
   const data = await fetchJSON(
     `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cityName)},${stateCode},${countryCode}&limit=${limit}&appid=${apiKey}`
   );
-
+    
   return {
     cityName: data[0].local_names.ru,
     longitude: data[0].lon,
@@ -96,10 +96,10 @@ async function fetchWeatherData(locationData) {
  */
 async function fetchCityData(name) {
   const locationData = await fetchLocationData(name);
+  console.log('locationData', locationData)
   const weatherData = await fetchWeatherData(locationData);
 
   return {
-    name,
     locationData,
     weatherData,
   };

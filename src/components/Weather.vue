@@ -26,7 +26,7 @@
          <v-list-item two-line>
             <v-list-item-content>
                <v-list-item-title class="text-h5">
-                  {{ city.name }}
+                  {{ city.locationData.cityName }}
                   <span> {{ new Date().toLocaleDateString() }}</span>
                </v-list-item-title>
             </v-list-item-content>
@@ -73,7 +73,7 @@
                dark
             >
                <div class="grey--text text--lighten-1 text-body-2 mb-4">
-                 Удалить виджет погоды для {{ city.name }} ?
+                 Удалить виджет погоды для {{ city.locationData.cityName }} ?
                </div>
 
                <v-btn @click="deleteCity = !deleteCity" :disabled="loading" class="ma-1" color="grey" plain>
@@ -92,6 +92,11 @@
             </v-sheet>
          </div>
       </v-card>
+      <v-progress-circular
+      class="loader"
+      indeterminate
+      color="primary"
+    ></v-progress-circular>
    </div>
 </template>
 
@@ -166,5 +171,8 @@ input {
   position: absolute;
   top: 50px;
   left: 50px;
+}
+.loader{
+  margin: 20px;
 }
 </style>
