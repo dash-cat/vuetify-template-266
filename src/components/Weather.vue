@@ -93,6 +93,7 @@
          </div>
       </v-card>
       <v-progress-circular
+      v-if="isLoading"
       class="loader"
       indeterminate
       color="primary"
@@ -112,6 +113,7 @@ export default {
          chooseCity: '',
          showCelsiy: true,
          deleteCity: true,
+         isLoading: false,
       }
    },
    watch: {
@@ -125,8 +127,10 @@ export default {
    },
    methods: {
       addCity() {
-         this.$store.dispatch('requestCityByName', this.chooseCity)
-         this.chooseCity = ''
+        this.isLoading = true
+        this.$store.dispatch('requestCityByName', this.chooseCity)
+          .then(() => this.isLoading = false)
+        this.chooseCity = ''
       },
       kelvinToCelsius(k) {
          return Math.round(k - 273.15)
