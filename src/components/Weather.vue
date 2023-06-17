@@ -3,12 +3,12 @@
     <v-card width="500">
       <v-card-actions class="footer">
         <input type="text" v-model="chooseCity" placeholder="Введите название города" />
-        <v-btn text @click="addCity"> Добавить город </v-btn>
+        <v-btn text @click="addCity" :disabled="isLoading || !chooseCity"> Добавить город </v-btn>
       </v-card-actions>
     </v-card>
 
     <v-card v-for="city in cities" :key="city.name" class="mx-auto" width="500">
-      <v-btn @click="deleteCity = !deleteCity" class="mx-2 btn" color="red">
+      <v-btn @click="dialogStates.push(city)" class="mx-2 btn" color="red">
         <v-icon dark> X </v-icon>
       </v-btn>
 
@@ -52,7 +52,7 @@
           Влажность воздуха:
           {{ city.weatherData.humidity }} %</v-list-item-subtitle>
       </v-list-item>
-      <div v-if="!deleteCity" class="warning">
+      <div v-if="dialogStates.includes(city)" class="warning">
         <v-sheet class="px-7 pt-7 pb-4 mx-auto text-center d-inline-block" color="blue-grey darken-3" dark>
           <div class="grey--text text--lighten-1 text-body-2 mb-4">
             Удалить виджет погоды для {{ city.locationData.cityName }} ?
@@ -85,7 +85,7 @@ export default {
       showCelsiy: true,
       deleteCity: true,
       isLoading: false,
-      
+      dialogStates: [],
     }
   },
   watch: {
@@ -102,8 +102,12 @@ export default {
       this.isLoading = true
       this.$store
         .dispatch('requestCityByName', this.chooseCity)
-        .then(() => (this.isLoading = false))
-      this.chooseCity = ''
+        .catch(() => alert('Не удалось загрузить город: ' + this.chooseCity))
+        .finally(() => {
+          this.isLoading = false;
+          this.chooseCity = '';
+        })
+      
     },
     kelvinToCelsius(k) {
       return Math.round(k - 273.15)
@@ -112,6 +116,7 @@ export default {
       return Math.round(((k - 273.15) * 9) / 5 + 32)
     },
     async remove() {
+
     }
   }
 }
