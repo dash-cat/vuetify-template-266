@@ -21,7 +21,7 @@ Vuetify template to use on CodeSandbox projects
 
 https://v2.vuetifyjs.com/en/
 
-https://openweathermap.org/api/one-call-3#current
+https://openweathermap.org/current
 
 https://openweathermap.org/api/geocoding-api
 

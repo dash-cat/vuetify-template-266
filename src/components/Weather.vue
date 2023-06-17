@@ -1,74 +1,57 @@
 <template>
+  <div class="container">
+    <v-card width="500">
+    <v-card-actions class="footer">
+      <input type="text" v-model="chooseCity" placeholder="Введите название города" >
+       <v-btn text @click="addCity">
+         Добавить город
+       </v-btn>
+     </v-card-actions>
+   </v-card>
+
    <v-card
-     class="mx-auto"
-     max-width="400"
+    v-for="city in cities"
+    :key="city.name"
+    class="mx-auto"
+    width="500"
    >
+   <v-btn
+      class="mx-2 btn"
+      color="red"
+    >
+      <v-icon dark>
+        X
+      </v-icon>
+    </v-btn>
+
      <v-list-item two-line>
        <v-list-item-content>
          <v-list-item-title class="text-h5">
-           San Francisco
+           {{ city.name }} 
+           <span> {{ (new Date).toLocaleDateString() }}</span>
          </v-list-item-title>
-         <v-list-item-subtitle>Mon, 12:30 PM, Mostly sunny</v-list-item-subtitle>
        </v-list-item-content>
      </v-list-item>
  
-     <v-card-text>
+     <v-card-text @click="showCelsiy = !showCelsiy">
        <v-row align="center">
-         <v-col
-           class="text-h2"
-           cols="6"
-         >
-           23&deg;C
+         <v-col v-if="!showCelsiy" class="text-h2">
+          {{ kelvinToFarengete(city.weatherData.temperature) + ' ℉' }}
          </v-col>
-         <v-col cols="6">
-           <v-img
-             src="https://cdn.vuetifyjs.com/images/cards/sun.png"
-             alt="Sunny image"
-             width="92"
-           ></v-img>
+         <v-col  v-if="showCelsiy" class="text-h2">
+          {{ kelvinToCelsius(city.weatherData.temperature) + ' °C'}}
          </v-col>
        </v-row>
      </v-card-text>
  
      <v-list-item>
-       <v-list-item-icon>
-         <v-icon>mdi-send</v-icon>
-       </v-list-item-icon>
-       <v-list-item-subtitle>23 km/h</v-list-item-subtitle>
+       <v-list-item-subtitle> Скорость ветра: {{ city.weatherData.windSpeed }} km/h</v-list-item-subtitle>
+       <v-list-item-subtitle> Влажность воздуха: {{ city.weatherData.humidity }} %</v-list-item-subtitle>
      </v-list-item>
- 
-     <v-list-item>
-       <v-list-item-icon>
-         <v-icon>mdi-cloud-download</v-icon>
-       </v-list-item-icon>
-       <v-list-item-subtitle>48%</v-list-item-subtitle>
-     </v-list-item>
- 
-     <v-list class="transparent">
-       <v-list-item
-         v-for="item in forecast"
-         :key="item.day"
-       >
-         <v-list-item-title>{{ item.day }}</v-list-item-title>
- 
-         <v-list-item-icon>
-           <v-icon>{{ item.icon }}</v-icon>
-         </v-list-item-icon>
- 
-         <v-list-item-subtitle class="text-right">
-           {{ item.temp }}
-         </v-list-item-subtitle>
-       </v-list-item>
-     </v-list>
- 
-     <v-divider></v-divider>
- 
-     <v-card-actions>
-       <v-btn text>
-         Добавить город
-       </v-btn>
-     </v-card-actions>
+
    </v-card>
+  
+  </div>
  </template>
 
 <script>
@@ -81,13 +64,9 @@ export default {
   ]),
   data () {
     return {
-      labels: ['SU', 'MO', 'TU', 'WED', 'TH', 'FR', 'SA'],
       time: 0,
-      forecast: [
-        { day: 'Tuesday', icon: 'mdi-white-balance-sunny', temp: '24\xB0/12\xB0' },
-        { day: 'Wednesday', icon: 'mdi-white-balance-sunny', temp: '22\xB0/14\xB0' },
-        { day: 'Thursday', icon: 'mdi-cloud', temp: '25\xB0/15\xB0' },
-      ],
+      chooseCity: '',
+      showCelsiy: true,
     }
   },
   watch: {
@@ -97,6 +76,45 @@ export default {
   },
   mounted() {
     this.$store.dispatch('requestCityByName', 'Novosibirsk');
+    console.log('sit', this.cities)
   },
+  methods: {
+    addCity() {
+      this.$store.dispatch('requestCityByName', this.chooseCity);
+      this.chooseCity = ''
+    },
+    kelvinToCelsius(k) {
+      return Math.round(k - 273.15)
+    },
+    kelvinToFarengete(k) {
+      return Math.round((k - 273.15) * 9/5 + 32)
+    }
+
+    
+  }
 }
 </script>
+
+<style>
+.footer{
+  display: flex;
+  justify-content: space-between;
+}
+input{
+  padding: 10px;
+  height: 30px;
+  width: 270px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.btn {
+  font-size: 14px;
+  font-family: serif;
+  float: right;
+  margin: 10px;
+}
+
+</style>
