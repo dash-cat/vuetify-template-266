@@ -86,7 +86,6 @@ export default {
   data() {
     return {
       isDelete: false,
-      time: 0,
       chooseCity: '',
       showCelsiy: true,
       deleteCity: true,
