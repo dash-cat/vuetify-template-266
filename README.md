@@ -26,4 +26,4 @@ https://openweathermap.org/current
 https://openweathermap.org/api/geocoding-api
 
 _____________
-мили в час (загрузка 10 минут) мобильная версия
+мобильная версия

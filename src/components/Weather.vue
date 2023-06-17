@@ -33,9 +33,15 @@
       </v-card-text>
 
       <v-list-item>
-        <v-list-item-subtitle>
+        <v-list-item-subtitle @click="kmPeerHours = !kmPeerHours">
           Скорость ветра:
-          {{ city.weatherData.windSpeed }} km/h</v-list-item-subtitle>
+          {{ kmPeerHours
+             ? windToKilometersHours(city.weatherData.windSpeed)
+             : windToMilePeerHours(city.weatherData.windSpeed)}}
+          {{ kmPeerHours
+             ? "km/h"
+             : "miles/h" }}
+        </v-list-item-subtitle>
         <v-list-item-subtitle>
           Облачность: {{ city.weatherData.clouds }} %</v-list-item-subtitle>
       </v-list-item>
@@ -86,6 +92,7 @@ export default {
       deleteCity: true,
       isLoading: false,
       dialogStates: [],
+      kmPeerHours: true,
     }
   },
   watch: {
@@ -118,6 +125,12 @@ export default {
     async remove(city) {
       this.$store
         .commit('deleteCity', city)
+    },
+    windToKilometersHours(t) {
+      return Math.round(t * 3.6 * 100) / 100
+    },
+    windToMilePeerHours(t) {
+      return Math.round(t * 2.237 * 100) / 100
     }
   }
 }
