@@ -6,6 +6,7 @@
 
 <script>
 import Weather from './components/Weather.vue'
+
 export default {
   components: { Weather },
    name: 'App',

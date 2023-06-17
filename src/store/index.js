@@ -96,7 +96,6 @@ async function fetchWeatherData(locationData) {
  */
 async function fetchCityData(name) {
   const locationData = await fetchLocationData(name);
-  console.log('locationData', locationData)
   const weatherData = await fetchWeatherData(locationData);
 
   return {
@@ -115,11 +114,21 @@ export default new Vuex.Store({
     },
     deleteCity(state, city) {
       state.cities = state.cities.filter((c) => c !== city)
+    },
+    replaceCities(state, newCities) {
+      state.cities = newCities;
     }
   },
   actions: {
     async requestCityByName(context, name) {
       context.commit('addCity', await fetchCityData(name));
     },
+    async reloadWeather(context) {
+      const newData = await Promise.all(context.state.cities.map(
+        city => fetchCityData(city.locationData.cityName)
+      ));
+
+      context.commit('replaceCities', newData);
+    }
   },
 });

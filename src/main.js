@@ -4,9 +4,11 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 
-
-
 Vue.config.productionTip = false;
+
+setInterval(() => {
+  store.dispatch('reloadWeather')
+}, 10 * 1000 * 60);
 
 new Vue({
   router,
