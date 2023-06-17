@@ -15,7 +15,7 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-title class="text-h5">
-            {{ city.locationData.cityName }}
+            {{ city.locationData.cityName }} <br>
             <span> {{ new Date().toLocaleDateString() }}</span>
           </v-list-item-title>
         </v-list-item-content>
@@ -36,11 +36,11 @@
         <v-list-item-subtitle @click="kmPeerHours = !kmPeerHours">
           Скорость ветра:
           {{ kmPeerHours
-             ? windToKilometersHours(city.weatherData.windSpeed)
-             : windToMilePeerHours(city.weatherData.windSpeed)}}
+            ? windToKilometersHours(city.weatherData.windSpeed)
+            : windToMilePeerHours(city.weatherData.windSpeed) }}
           {{ kmPeerHours
-             ? "km/h"
-             : "miles/h" }}
+            ? "km/h"
+            : "miles/h" }}
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           Облачность: {{ city.weatherData.clouds }} %</v-list-item-subtitle>
@@ -64,11 +64,11 @@
             Удалить виджет погоды для {{ city.locationData.cityName }} ?
           </div>
 
-          <v-btn @click="dialogStates = dialogStates.filter(s => s !== city)"  class="ma-1" color="grey" plain>
+          <v-btn @click="dialogStates = dialogStates.filter(s => s !== city)" class="ma-1" color="grey" plain>
             Отмена
           </v-btn>
 
-          <v-btn  class="ma-1" color="error" plain @click="remove(city)">
+          <v-btn class="ma-1" color="error" plain @click="remove(city)">
             Удалить
           </v-btn>
         </v-sheet>
@@ -114,7 +114,7 @@ export default {
           this.isLoading = false;
           this.chooseCity = '';
         })
-      
+
     },
     kelvinToCelsius(k) {
       return Math.round(k - 273.15)

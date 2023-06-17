@@ -1,6 +1,19 @@
-# vuetify-codesandbox
+# weather
 
-Vuetify template to use on CodeSandbox projects
+> A Vue.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
 
 Тестовое задание:
 
@@ -19,11 +32,11 @@ Vuetify template to use on CodeSandbox projects
 
 Срок выполнения до 19 июня, Понедельник. Если будут вопросы – пиши 😊
 
+# ссылки на документацию
+
 https://v2.vuetifyjs.com/en/
 
 https://openweathermap.org/current
 
 https://openweathermap.org/api/geocoding-api
 
-_____________
-мобильная версия

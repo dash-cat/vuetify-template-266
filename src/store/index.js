@@ -127,7 +127,6 @@ export default new Vuex.Store({
       const newData = await Promise.all(context.state.cities.map(
         city => fetchCityData(city.locationData.cityName)
       ));
-
       context.commit('replaceCities', newData);
     }
   },
