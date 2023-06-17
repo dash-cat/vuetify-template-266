@@ -58,11 +58,11 @@
             Удалить виджет погоды для {{ city.locationData.cityName }} ?
           </div>
 
-          <v-btn @click="deleteCity = !deleteCity"  class="ma-1" color="grey" plain>
+          <v-btn @click="dialogStates = dialogStates.filter(s => s !== city)"  class="ma-1" color="grey" plain>
             Отмена
           </v-btn>
 
-          <v-btn  class="ma-1" color="error" plain @click="remove">
+          <v-btn  class="ma-1" color="error" plain @click="remove(city)">
             Удалить
           </v-btn>
         </v-sheet>
@@ -115,8 +115,9 @@ export default {
     kelvinToFarengete(k) {
       return Math.round(((k - 273.15) * 9) / 5 + 32)
     },
-    async remove() {
-
+    async remove(city) {
+      this.$store
+        .commit('deleteCity', city)
     }
   }
 }

@@ -113,6 +113,9 @@ export default new Vuex.Store({
     addCity(state, city) {
       state.cities.push(city);
     },
+    deleteCity(state, city) {
+      state.cities = state.cities.filter((c) => c !== city)
+    }
   },
   actions: {
     async requestCityByName(context, name) {
