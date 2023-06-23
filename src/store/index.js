@@ -94,6 +94,7 @@ async function fetchWeatherData(locationData) {
  * @param {string} name 
  * @returns {Promise<CityData>}
  */
+
 async function fetchCityData(name) {
   const locationData = await fetchLocationData(name);
   const weatherData = await fetchWeatherData(locationData);

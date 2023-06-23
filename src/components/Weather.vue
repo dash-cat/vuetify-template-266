@@ -48,11 +48,11 @@
       <v-list-item>
         <v-list-item-subtitle v-if="!showCelsiy">
           Ощущается как:
-          {{ kelvinToFarengete(city.weatherData.temperature) + ' ℉' }}
+          {{ kelvinToFarengete(city.weatherData.temperatureFeelsLike) + ' ℉' }}
         </v-list-item-subtitle>
         <v-list-item-subtitle v-if="showCelsiy">
           Ощущается как:
-          {{ kelvinToCelsius(city.weatherData.temperature) + ' °C' }}
+          {{ kelvinToCelsius(city.weatherData.temperatureFeelsLike) + ' °C' }}
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           Влажность воздуха:
@@ -101,7 +101,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('requestCityByName', 'Новосибирск')
-    console.log('sit', this.cities)
   },
   methods: {
     addCity() {
